@@ -1,0 +1,29 @@
+\documentclass[12pt, a4paper, twoside]{report}
+\input{preamb.tex}
+\begin{document}
+%-------------------------------------FRONTESPIZIO
+\begin{titlepage}
+    \subfile{src/fronte.tex}
+\end{titlepage}
+%-------------------------------------INDICE
+\setcounter{page}{1}
+\pagenumbering{roman}
+\tableofcontents{}
+\newpage
+%-------------------------------------ABSTRACT
+\chapter*{Abstract}
+\subfile{src/abstract.tex}
+%-------------------------------------INTRODUZIONE
+\chapter*{Prefazione}
+\subfile{src/prefazio.tex}
+
+\chapter{Introduzione}
+\subfile{src/intro.tex}
+\pagenumbering{arabic}
+%-------------------------------------METODI E RISULTATI
+\chapter{Metodi e risultati}
+\subfile{src/metris.tex}
+%-------------------------------------DISCUSSIONE E CONCLUSIONI
+\chapter{Discussione e conclusioni}
+\subfile{src/discon.tex}
+\end{document}
