@@ -5,25 +5,34 @@
 \begin{titlepage}
     \subfile{src/fronte.tex}
 \end{titlepage}
-%-------------------------------------INDICE
 \setcounter{page}{1}
 \pagenumbering{roman}
-\tableofcontents{}
-\newpage
 %-------------------------------------ABSTRACT
 \chapter*{Abstract}
 \subfile{src/abstract.tex}
-%-------------------------------------INTRODUZIONE
 \chapter*{Prefazione}
 \subfile{src/prefazio.tex}
-
-\chapter{Introduzione}
-\subfile{src/intro.tex}
+%-------------------------------------INDICE
+\tableofcontents{}
+\newpage
+%-------------------------------------INTRODUZIONE
 \pagenumbering{arabic}
+\chapter*{Introduzione}
+\addcontentsline{toc}{chapter}{Introduzione}
+\subfile{src/intro.tex}
+%-------------------------------------ESPERIMENTI FISICA PARTICELLE
+\chapter{Collisione di fasci di particelle}
+\subfile{src/esp.tex}
+%-------------------------------------TRIDAS
+\chapter{TriDAS}
+\subfile{src/tridas.tex}
 %-------------------------------------METODI E RISULTATI
-\chapter{Metodi e risultati}
+\chapter{Trigger \emph{TrigFromBeam}}
 \subfile{src/metris.tex}
 %-------------------------------------DISCUSSIONE E CONCLUSIONI
-\chapter{Discussione e conclusioni}
+\chapter{Conclusioni}
 \subfile{src/discon.tex}
+%-------------------------------------BIBLIOGRAFIA
+\chapter{Bibliografia}
+\subfile{src/bib.tex}
 \end{document}
