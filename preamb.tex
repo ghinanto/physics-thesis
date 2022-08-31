@@ -4,11 +4,20 @@
 \usepackage{import}
 \usepackage{graphicx}
 \graphicspath{{img/}}
+\usepackage[margin=10pt, labelfont=bf, font=small, labelsep=quad]{caption}
 \usepackage{blindtext}
+\usepackage{xcolor}
 \usepackage{geometry}
 \usepackage{lipsum}
-\usepackage{hyperref}
-
+\usepackage[colorlinks=true,
+linkcolor=black,
+urlcolor=teal,
+citecolor=black]{hyperref}
+\usepackage{siunitx}
+\usepackage{biblatex}
+\addbibresource{citation.bib}
+\usepackage{url}
+\newcommand{\dd}[1]{\mathrm{d}#1}
 
 \usepackage{subfiles} % Best loaded last in the preamble
 
@@ -30,3 +39,5 @@
     %pdftitle={Overleaf Example},
     %pdfpagemode=FullScreen,
 }
+
+\linespread{1}

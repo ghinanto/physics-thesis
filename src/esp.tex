@@ -1,5 +1,84 @@
 \documentclass[../main.tex]{subfiles}
 \graphicspath{{img/}}
 \begin{document}
-esperimenti di accelerazione di particelle
+Da sempre l'uomo, interrogato dalla natura e dall'esistenza di tutto, ha intuito che la materia, in tutta la sua varietà di forme, colori e consistenze, è il risultato della combinazione di pochi elementi fondamentali. Per esempio, Platone affermava che tutti i corpi sono solidi geometrici, i solidi geometrici sono definiti da superfici e queste possono essere ricoperte utilizzando triangoli isosceli e scaleni soltanto. Quindi questi triangoli sarebbero i costituenti fondamentali dei corpi, come le lettere dell'alfabeto sono i costituenti fondamentali delle sillabe e delle parole. Altri due filosofi greci, Democrito e Leucippo, introdussero il concetto di atomo come costituente fondamentale e indivisibile della realtà, presente in specie diverse per forma geometrica e grandezza.
+
+Le prime evidenze riguardo l'esistenza di questi enti fondamentali non sono giunte però che all'inizio del secolo scorso, con gli esperimenti di Dalton riguardo alle reazioni chimiche, e le teorie di Einstein riguardo al moto Browniano. Quindi giunse la scoperta dell'elettrone da parte di Thomson nel 1897 a mostrare l'esistenza di particelle più piccole dell'atomo, le quali potevano andare a costituirne una struttura interna.
+
+\section{Esperimenti di diffusione}
+\begin{figure}[b!]
+    \centering
+    \includegraphics[width=\textwidth]{rutherford.jpg}
+    \caption{L'esperimento ideato da Rutherford prevedeva un bersaglio d'oro di appena \SI{8.6e-6}{\cm} di spessore, irradiato da un flusso di particelle $\alpha$ generate dal decadimento di una lastra di radon. Il bersaglio era circondato da vetro dipinto con solfuro di zinco (ZnS), che scintillava al contatto con particelle cariche. Le particelle $\alpha$, cariche positivamente, proseguivano indisturbate, in alcuni casi, o venivano deviate a grandi angoli, in altri casi, fino anche ad essere respinte. Ciò dimostrava l'inesattezza del modello atomico di Thomson, in cui la carica positiva dell'atomo ne riempiva tutto il volume. Invece doveva esistere all'interno dell'atomo una concentrazione di carica positiva abbastanza alta da poter deviare le pesanti particelle $\alpha$.}
+    \label{fig:rutherford}
+\end{figure}
+I primi esperimenti che andarono a indagare la struttura interna dell'atomo furono quelli svolti da Rutherford, Geiger e Marsden tra il 1908 e il 1913, spinti nella loro ricerca dalle criticità del modello atomico sviluppato qualche anno prima da Thomson. Essi utilizzarono un flusso di particelle $\alpha$, i.e. nuclei di elio, di energia \SI{5.6}{\MeV} generate dal decadimento del radon, per bersagliare una foglia d'oro di spessore di appena \SI{8.6e-6}{\cm} (fig.\ref{fig:rutherford}). Quindi, intorno al bersaglio, uno scintillatore composto da vetro dipinto con solfuro di zinco (ZnS) rendeva evidenti le particelle cariche prodotte dalla collisione. Il risultato fu che una certa percentuale di particelle $\alpha$ veniva deviata ad angoli molto maggiori di \SI{90}{°} o addirittura respinta, negando definitivamente il modello atomico di Thomson, che prevedeva un atomo mediamente neutro anche al proprio interno. Infatti solo una grande concentrazione di carica sarebbe stata in grado di generare un campo elettrico capace di respingere le pesanti particelle $\alpha$. Si imponeva quindi la presenza di un volume all'interno dell'atomo di dimensione molto minore dell'atomo stesso, in cui fosse concentrata tutta la carica di quest'ultimo: il nucleo. Nacque così il modello atomico planetario di Rutherford e le seguenti implicazioni che contribuirono all'origine della fisica quantistica. 
+
+Oggi la ricerca nel campo della fisica delle particelle procede di fatto nello stesso modo ideato da Rutherford: un fascio di particelle di opportuna energia viene scagliato contro un bersaglio a riposo, e i prodotti della collisione sono rilevati con opportuna strumentazione. L'interazione fra proiettili e bersaglio da luogo a nuove particelle che possono differire da quelle iniziali per natura o proprietà cinematiche, e, studiando le distribuzioni di questi stati finali, si possono ottenere informazioni sulla natura delle interazioni che sono intervenute.
+
+Questo tipo di esperimento viene detto "a target fisso", in alternativa al tipo di esperimento in cui due fasci di particelle procedenti in direzioni opposte vengono fatti scontrare l'uno contro l'altro.
+
+\section{Sezione d'urto}
+La grandezza fisica che è più facilmente misurabile in un esperimento di fascio di particelle a target fisso è il numero di particelle prodotte dall'interazione fascio-bersaglio nell'unità di tempo. Per esempio, nell'esperimento ideato da Rutherford, si tratterebbe di contare le particelle $\alpha$ deflesse nell'unità di tempo, $\frac{\dd N_{def}}{\dd t}$. 
+Questa frequenza dovrà essere proporzionale al numero di particelle del fascio che arrivano sul bersaglio nell'unità di tempo, $\frac{\dd N_f}{\dd t}$, allo spessore $\Delta$x del bersaglio e alla densità di volume del bersaglio $n_b$
+\begin{equation} \label{eq:def_ratio}
+    \frac{\dd N_{def}}{\dd t} = \sigma_r \cdot \frac{\dd N_f}{\dd t} \cdot n_b \cdot \Delta \mathrm{x}
+\end{equation}
+Il fattore di proporzionalità $\sigma_r$ viene chiamato \textit{sezione d'urto} della reazione. Questa quantità deve avere le dimensioni di una superficie e dipende dalla natura e dalle proprietà delle particelle che costituiscono fascio e bersaglio, e dalla intensità della loro interazione. Di fatto, la sezione d'urto misura la probabilità che una certa interazione abbia luogo. Infatti, integrando la precedente equazione nel tempo, si ottiene 
+\begin{equation}
+    \sigma_r = \frac{N_{def}}{N_f} \frac{1}{n_b \cdot \Delta x}
+\end{equation}
+da cui è possibile misurare il valore della sezione d'urto della reazione. Si vede come la sezione d'urto sia proporzionale alla probabilità $\frac{N_{def}}{N_f}$.
+
+La sezione d'urto è comunemente misurata in \textit{barn}, definito come
+\begin{equation}
+    1\ \mathrm{barn} = \SI{e-28}{\m ^2}
+\end{equation}
+
+Assumiamo ora un fascio con particelle distribuite in modo uniforme su una superficie $\Sigma$. L'equazione \ref{eq:def_ratio} può essere riscritta come 
+\begin{equation}
+    \frac{\dd N_{def}}{\dd t} = \sigma_r \cdot \varphi \cdot N_b
+\end{equation}
+dove $\varphi = \frac{\dd N_f}{\dd t \cdot \Sigma}$ è il flusso di particelle del fascio per unità di tempo e unità di superficie, e $N_b = n_b \cdot \Sigma \cdot \Delta \mathrm{x}$ è il numero di particelle del bersaglio che hanno avuto modo di interagire col fascio. 
+
+Il flusso $\varphi$ può essere espresso attraverso la densità e la velocità dei proiettili. Infatti, il numero di proiettili può essere scritto come $\dd N_f = n_f \Sigma \cdot v \dd t$ dove $v$ è la velocità del fascio. Quindi, 
+\begin{equation}
+    \varphi = \frac{n_f \Sigma \cdot v \dd t}{\dd t \cdot \Sigma} = n_f \cdot v
+\end{equation}
+
+\section{Acceleratori}
+L'energia della collisione in un esperimento di diffusione regola il tipo di processi che 
+
+Il tipo di processi possibili in un esperimento di diffusione dipende dall'energia della collisione. Per questo, è importante essere in grado di controllare l'energia dei proiettili 
+
+\section{Raggi cosmici}
+\begin{figure}[b!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{cosmic.jpg}
+    \caption{Rappresentazione delle reazioni generate dall'ingresso di un protone cosmico nell'atmosfera. I pioni carichi, prodotti dalla collisione tra protoni e nuclei di azoto, decadono in muoni e quest'ultimi in elettroni, realizzando così una \textit{cascata adronica}. I pioni neutri, invece, decadono in una coppia di fotoni, ciascuno dei quali può decadere in una coppia elettrone-positrone. A loro volta elettroni e positroni possono produrre fotoni per accelerazione, innescando così reazioni a catena dette \textit{cascata elettromagnetica}. \cite{as10_vdu}}
+    \label{fig:cosmic}
+\end{figure}
+Prima dell'invenzione degli acceleratori di particelle, nel primo dopoguerra, la fisica delle particelle aveva come unico ambito lo studio delle radiazioni ionizzanti che venivano rilevate sulla Terra. Infatti esse rappresentano una naturale fonte di particelle ad alta energia.
+Nel 1912, Hess ne definì l'origine extraterrestre, mostrando come il livello di radiazione ionizzante rilevata cresceva all'aumentare dell'altitudine, da cui il nome di raggi cosmici. 
+
+Questa radiazione, detta \textit{primaria}, è composta principalmente da protoni ($85\%$), nuclei di elio ($12\%$), nuclei pesanti ($1\%$) e elettroni ($2\%$). Interagendo coi nuclei dell'atmosfera terrestre in collisioni ad alta energia ($\small \sim$ \SI{1}{\GeV}), i protoni e i nuclei generano pioni, mesoni-K o altri adroni, i quali hanno in genere abbastanza energia per decadere in altri adroni attraverso nuove collisioni realizzando così una \textit{cascata adronica}. Inizialmente il numero di particelle prodotte dalla cascata aumenta, per poi diminuire una volta dispersa abbastanza energia. Infatti gli adroni prodotti sono instabili. I pioni carichi decadono con vita media di appena \SI{26}{\ns} in muoni, a loro volta instabili con vita media di \SI{2}{\micro\s}. I pioni neutri invece, decadono tramite interazione elettromagnetica in una coppia di fotoni, i quali, interagendo coi nuclei dell'atmosfera, generano elettroni e positroni. Questi emettono a loro volta fotoni per accelerazione o decelerazione, realizzando così delle reazioni a catena chiamate \textit{cascata elettromagnetica}.
+
+In conclusione, a Terra riceviamo principalmente due componenti della radiazione cosmica: una \textit{soft}, composta dalla cascata elettromagnetica, la quale viene assorbita da materiali come il piombo, e una \textit{hard}, composta principalmente da muoni, la quale è in grado di penetrare anche strati spessi di materia. 
+Una terza componente è costituita dai neutrini prodotti dal decadimento dei muoni cosmici in elettroni.
+
+\section{Scintillatori}
+Una delle tecniche più usate per rilevare il passaggio di particelle cariche è sfruttare la ionizzazione del mezzo che attraversano. In particolare, gli scintillatori (fig. \ref{fig:pmt}) sfruttano i fotoni emessi nel momento della diseccitazione del materiale ionizzato. Questi fotoni vengono incanalati in un fotomoltiplicatore, il quale produce elettroni per effetto fotoelettrico e li converte in segnale elettrico. Il tutto è protetto da un materiale che scherma da campi magnetici esterni, come quello terrestre.
+
+\begin{figure}[b!]
+    \centering
+    \includegraphics[width=\textwidth]{pmt_trasp.png}
+    \caption{Lo schema di un rilevatore a scintillazione. Quando una radiazione ionizzante entra nello scintillatore, ne eccita gli atomi i quali, diseccitandosi, emettono fotoni. Questi entrano nel fotomoltiplicatore dove vengono convertiti in segnale elettrico tramite effetto fotoelettrico. Uno strato di materiale ferromagnetico (\textit{mu-metal}: \SI{80}{\%} nickel, \SI{20}{\%} ferro) scherma da campi magnetici come quello terrestre.}
+    \label{fig:pmt}
+\end{figure}
+
+Si possono distinguere due categorie di materiali scintillatori.
+\textit{Organici}, composti aromatici come il benzene. Una volta eccitati, emettono luce con tempi di decadimento di pochi nanosecondi. Possono essere in forma di cristallo (come l'\textit{anthracene}), liquida o plastica. \textit{Inorganici}, sono cristalli alcalini come lo ioduro di sodio. Questo tipo di scintillatore ha grande efficienza luminosa, i.e. produce molti fotoni per quantità di radiazione ionizzante, ma ha tempi di risposta più lenti degli scintillatori di tipo organico.
+
+Il fotomoltiplicatore consiste in una serie di dinodi, ciascuno con potenziale maggiore del precedente. All'ingresso, un catodo viene colpito dai fotoni prodotti dallo scintillatore ed emette elettroni per effetto fotoelettrico, i quali vengono attratti dal primo dinodo della serie dalla differenza di potenziale. Da qui, un maggior numero di elettroni vengono attirati verso il dinodo successivo per \textit{emissione secondaria}. Quindi, un anodo raccoglie gli elettroni al termine della serie di dinodi, per un fattore totale di moltiplicazione di \SI{e5}{} $-$ \SI{e7}{}.
+
 \end{document}
