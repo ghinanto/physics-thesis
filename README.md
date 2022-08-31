@@ -1,17 +1,17 @@
 # Thesis
 ## Compilation
-Compile with _pdfLaTeX_:
+Compile with _pdfLaTeX_ and _biber_ running this sequence of commands:
 ```
 $ pdflatex main.tex
+$ biber main
+$ pdflatex main.tex
+$ pdflatex main.tex
 ```
-It's also possible to compile each part individually from the root directory. For example:
-```
-$ pdflatex src/intro.tex
-``` 
 List of required packages is in preamb.tex.
 
-For an easier way to install packages and manage the project, try using _tectonic_:
+For an automated way to install packages, bibliograhy generation and one line compilation, try using _tectonic_:
 ```
 $ tectonic main.tex
 ```
+You will still need to install biber manually, but manual tex-live installation is not required.
 Instruction on how to get it on its [github page](https://github.com/tectonic-typesetting/tectonic).
