@@ -29,13 +29,13 @@ struct PluginArgs
   Configuration const* params;
 };
 \end{lstlisting}
-Quindi l'algoritmo dispone degli eventi appartenenti a una certa \emph{TimeSlice} (TS), alla geometria dell'apparato e al file di configurazione fornito dall'utente.
+Quindi l'algoritmo dispone degli eventi appartenenti a una certa \emph{TimeSlice} (TS), della geometria dell'apparato e del file di configurazione fornito dall'utente.
 Per ciascun evento della TS, l'algoritmo riempie un vettore chiamato \texttt{seeds} con le \emph{hit}, i.e. picchi di segnale, selezionate dal \emph{trigger} L1, dette \emph{seed} del \emph{trigger}.
 \lstinputlisting[linerange={181-181},language=C++,frame=none]{../lst/TrigFromBeam/TrigFromBeam.cpp}
 Infatti l'energia media di un muone cosmico alla superficie terrestre ($\small\sim$\SI{4}{GeV}) è tale da superare la soglia del trigger L1 (\SI{2}{GeV}).
 Le \emph{hit} sono rappresentate dal tipo \texttt{PMTHit}, che contiene l'indice identificativo del sensore che ha prodotto la \emph{hit}, il tempo di arrivo, la carica elettrica del picco di segnale, etc. 
 Quindi, per ciascun \emph{seed} \texttt{this\_seed} del vettore \texttt{seeds}, si verifica la presenza di altri \emph{seed} correlati spazio-temporalmente a \texttt{this\_seed}. In caso affermativo, i \emph{seed} corrispondenti sono inseriti in un vettore chiamato \texttt{cosmic\_trace}.
-\lstinputlisting[language=C++,frame=none,emph={[3]this_seed},emphstyle={[3]\color{blue}},caption={Algoritmo di selezione di \emph{hit} generate da raggi cosmici.},label={lst:algo}]{../lst/algo_short.cpp}
+\lstinputlisting[language=C++,frame=none,emph={[3]this_seed},emphstyle={[3]\color{blue}},caption={Algoritmo di selezione di \emph{hit} generate da raggi cosmici implementato dalla funzione \texttt{TrigFromBeam}.},label={lst:algo}]{../lst/algo_short.cpp}
 La correlazione spaziale e temporale dipende dalla geometria dell'apparato e dal fenomeno fisico in questione. Nel caso dei raggi cosmici, possiamo considerare in prima approssimazione muoni che volano in direzione perpendicolare alla superficie terrestre a velocità prossime a $c$. 
 L'apparato del rilevatore è il prototipo descritto nel capitolo precedente (\autoref{sct:jlab}). Consideriamo quindi una matrice $3 \times 3$ di rilevatori, ciascuno di sezione quadrata di lato $d$.
 Quindi, nel caso di passaggio di un muone cosmico all'interno del rilevatore, ci aspettiamo di trovare \emph{hit} successive in una colonna di rilevatori, a distanza temporale di $\small\sim\frac{d}{c}$.
@@ -43,7 +43,7 @@ Quindi, nel caso di passaggio di un muone cosmico all'interno del rilevatore, ci
 La correlazione spaziale e temporale è definita dalle funzioni \texttt{timeCorrelation} e \texttt{spaceCorrelation}.
 La funzione \texttt{timeCorrelation} prende come argomento due \emph{hit} e restituisce \texttt{vero} o \texttt{falso} a seconda che siano soddisfatti i criteri di correlazione temporale.
 Per tenere conto di possibili variazioni statistiche del valore della velocità di volo e di traiettorie non propriamente verticali, la funzione verifica che la distanza temporale tra le due \emph{hit} cada all'interno di un intervallo.
-La distanza temporale minima \texttt{shortest\_correlation\_time\_frame} tra due \emph{hit} è $\frac{d}{c}$, ovvero quella tra due \emph{hit} generate da un muone che cade perpendicolare alla superficie terrestre a velocità $c$.
+La distanza temporale minima \texttt{shortest\_correlation\_time\_frame} tra due \emph{hit} è $\frac{d}{c}$, ovvero quella generata da un muone che cade perpendicolare alla superficie terrestre a velocità $c$.
 La distanza temporale massima \texttt{longest\_correlation\_time\_frame} è definita come $\frac{\sqrt{2}d}{0.9\ c}$, ovvero quella tra due \emph{hit} generate da un muone che cade con inclinazione di $45^\circ$ rispetto alla superficie terrestre a velocità $0.9c$.
 
 \lstinputlisting[linerange={118-124},language=C++,frame=none,caption={Algoritmo di correlazione temporale implementato dalla funzione \texttt{timeCorrelation}. L'unità di misura \texttt{fine\_time} corrisponde a \SI{e-9}{\s}.}]{../lst/TrigFromBeam/TrigFromBeam.cpp}
@@ -92,13 +92,17 @@ Inoltre tramite la funzione \texttt{getParticleEnergy} viene calcolata la somma 
 Si vede come l'algoritmo sia strutturato in modo da sfruttare una logica generale tramite le funzioni \texttt{timeCorrelation} e \texttt{spaceCorrelation}, lasciando a queste l'implementazione dei criteri specifici di correlazione spazio-temporale per l'esperimento in questione. In questo modo si è cercato di rendere l'algoritmo il più possibile astratto e adattabile a diverse configurazioni dell'apparato sperimentale.
 
 L'algoritmo fa uso del sistema di \emph{logging} \texttt{TRIDAS\_LOG} implementato in TriDAS per comunicare risultati e errori. 
-\lstinputlisting[linerange={256-258},language=C++,frame=none,caption={Esempio di uso del sistema di \emph{log}. Prima di terminare l'esecuzione, viene riportato il numero di \emph{seed} selezionati dal \emph{trigger} L2.}]{../lst/TrigFromBeam/TrigFromBeam.cpp}
+\lstinputlisting[linerange={255-257},language=C++,frame=none,caption={Esempio di uso del sistema di \emph{log}. Prima di terminare l'esecuzione, viene riportato il numero di \emph{seed} selezionati dal \emph{trigger} L2.}]{../lst/TrigFromBeam/TrigFromBeam.cpp}
 \section{Ambiente di test}
 %intro della section
-\subsection{Applicazione offline del trigger a PT file}
+TriDAS prevede un algoritmo di esecuzione \emph{offline} con lo scopo di sottoporre i dati contenuti in un PT file precedentemente acquisito a un \emph{trigger plugin} (L2). Questo algoritmo è stato perfezionato e reso funzionante. Inoltre è stato completata la configurazione di un ambiente \emph{docker compose} con cui eseguire localmente TriDAS in fase di test. 
+\subsection{Applicazione \emph{offline} del trigger a PT file}
+
 \subsection{Ambiente \emph{docker} di esecuzione}
+
 \section{Strumenti di analisi dei file di output}
-intro della section
+%intro della section
+Sono stati sviluppati strumenti di analisi dei PT file in modo da leggerne e osservarne graficamente il contenuto.
 \subsection{Estrazione in formato testuale dei dati dei PT file}
 \subsection{Graficare dati numerici da file di testo}
 \end{document}
