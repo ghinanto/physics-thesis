@@ -23,6 +23,8 @@ citecolor=black]{hyperref}
 \newcommand{\dd}[1]{\mathrm{d}#1}
 \usepackage[libertine]{newtxmath}
 %\usepackage{newtxtext,newtxmath}
+\usepackage{inconsolata}
+\usepackage{listings}
 
 \usepackage{subfiles} % Best loaded last in the preamble
 
@@ -45,4 +47,85 @@ citecolor=black]{hyperref}
     %pdfpagemode=FullScreen,
 }
 
+\lstdefinestyle{myStyle}{
+    belowcaptionskip=1\baselineskip,
+    breaklines=true,
+    frame=true,
+    numbers=none,
+    basicstyle=\footnotesize\ttfamily,
+    keywordstyle=\bfseries\color{green!40!black},
+    commentstyle=\itshape\color{purple!40!black},
+    identifierstyle=\color{black},
+    backgroundcolor=\color{white}%\color{gray!10!white},
+}
+
+% VS2017 C++ color scheme
+\definecolor{clr-background}{RGB}{255,255,255}
+\definecolor{clr-text}{RGB}{0,0,0}
+\definecolor{clr-string}{RGB}{163,21,21}
+\definecolor{clr-namespace}{RGB}{0,0,0}
+\definecolor{clr-preprocessor}{RGB}{128,128,128}
+\definecolor{clr-keyword}{RGB}{0,0,255}
+\definecolor{clr-type}{RGB}{43,145,175}
+\definecolor{clr-variable}{RGB}{0,0,0}
+\definecolor{clr-constant}{RGB}{111,0,138} % macro color
+\definecolor{clr-comment}{RGB}{0,128,0}
+
+\lstdefinestyle{VS2017}{
+	backgroundcolor=\color{clr-background},
+	basicstyle=\ttfamily\footnotesize\color{clr-text}, % any text
+	stringstyle=\color{clr-string},
+	identifierstyle=\color{clr-variable}, % just about anything that isn't a directive, comment, string or known type
+	commentstyle=\color{clr-comment},
+	%directivestyle=\color{clr-preprocessor}, % preprocessor commands
+	% listings doesn't differentiate between types and keywords (e.g. int vs return)
+	% use the user types color
+	keywordstyle=\color{clr-type},
+	keywordstyle={[2]\color{clr-constant}}, % you'll need to define these or use a custom language
+	tabsize=4
+}
+
+%Custom Colors
+\definecolor{plainText}{RGB}{74,131,31}
+\definecolor{comments}{RGB}{74,131,31}
+\definecolor{strings}{RGB}{180,54,34}
+\definecolor{numbers}{RGB}{44,45,211}
+\definecolor{keywords}{RGB}{160,49,158}
+\definecolor{preprocessorStatements}{RGB}{109,75,48}
+\definecolor{classNames}{RGB}{101,63,165}
+\definecolor{background}{RGB}{245,248,250}
+
+\lstdefinestyle{c++}{
+  frame=single,
+  %frameround=tttt,
+  backgroundcolor=\color{background},
+  language=C++,
+  % You need to declare < and > as "letters" in order to highlight
+  % words that contain those characters:
+  alsoletter=<>,
+  % You can use multiple classes of words to emphasize,
+  % each with its own style, as follows:
+  %emph      = {[1]cout, for, int, std},
+  %emphstyle = {\bfseries},
+  %emph      = {[2]double, std},
+  %emphstyle = {[2]\color{blue}\bfseries},
+  % The style of compiler directives can be customise via...
+  directivestyle=\color{magenta}\itshape, % (for instance)
+  aboveskip=4mm,
+  belowskip=4mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\ttfamily\color{black},
+  keywordstyle=\bfseries\color{keywords},
+  commentstyle=\color{comments},
+  stringstyle=\color{strings},
+  breaklines=true,
+  breakatwhitespace=true, % (a comma was missing there)
+  tabsize=4,
+}
+
+\renewcommand{\lstlistingname}{Listato}
+\lstset{style=c++}
 \linespread{1}
