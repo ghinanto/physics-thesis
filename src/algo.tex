@@ -97,9 +97,21 @@ L'algoritmo fa uso del sistema di \emph{logging} \texttt{TRIDAS\_LOG} implementa
 %intro della section
 TriDAS prevede un algoritmo di esecuzione \emph{offline} con lo scopo di sottoporre i dati contenuti in un PT file precedentemente acquisito a un \emph{trigger plugin} (L2). Questo algoritmo è stato perfezionato e reso funzionante. Inoltre è stato completata la configurazione di un ambiente \emph{docker compose} con cui eseguire localmente TriDAS in fase di test. 
 \subsection{Applicazione \emph{offline} del trigger a PT file}
+Il programma \texttt{trig\_sim} esegue in locale una TCPU e un EM, sottoponendo ai \emph{trigger} i dati contenuti in un PT file e salvando i risultati in un nuovo PT file.
+Il programma prende quattro argomenti da riga di comando: la pozione dell'eseguibile della TCPU, il file di configurazione di TriDAS, il PT file da analizzare, il nome del nuovo PT file in cui salvare i dati. L'interfaccia fa uso della libreria \texttt{boost::program\_options}.
 
+Per prima cosa si avvia la TCPU come sottoprocesso. L'eseguibile della TCPU richiede due argomenti da riga di comando: identificativo della TCPU e file di configurazione di TriDAS.
+\lstinputlisting[linerange={112-112,114-114},language=C++,frame=none]{../lst/trig_sim_3x3telescope.cpp}
+Quindi, vengono create le socket necessarie a realizzare le connessioni tra i diversi moduli e connesse alle porte della rete locale indicate nel file di configurazione.
+\lstinputlisting[linerange={117-120},language=C++,frame=none]{../lst/trig_sim_3x3telescope.cpp}
+\lstinputlisting[language=json,frame=none,caption={Parte del file di configurazione in cui si specificano alcuni parametri richiesti dalla TCPU, come le porte della rete locale a cui connettersi.}]{../lst/conf_example.json}
+Quindi, in un nuovo \emph{thread}, viene avviato il \texttt{FileWriter}, componente dell'EM, il quale resta in attesa di ricevere eventi da scrivere nel PT file. 
+Il PT file viene letto utilizzando la classe \texttt{PTFileReader} di TriDAS, la quale permette di scorrere le le TS, gli eventi di ciascuna TS e le \emph{hit} di ciascun evento. Quindi, per ciascuna TS viene costruita una TTS e inviata alla TCPU tramite la socket \texttt{hm2tcpu}.
+La TCPU quindi analizza la TTS, costruisce gli eventi e li invia al \texttt{FileWriter} utilizzando la socket \texttt{tcpu2em}.
 \subsection{Ambiente \emph{docker} di esecuzione}
-
+\emph{Docker compose} è una tecnologia che permette di definire e eseguire applicazioni che richiedono la connessione di diversi \emph{container}. I \emph{container} dell'applicazione, detti \say{servizi}, sono definiti in un file di configurazione formato \texttt{YAML}. Ciascun servizio esegue un modulo di TriDAS e si connette agli altri tramite una rete locale creata da \emph{compose}. Quindi \emph{compose} prevede comandi per: avviare tutti i servizi, vedere l'output e il \emph{log} di ciascun servizio, aprire una \emph{shell} in qualsiasi \emph{container} per eseguire dei comandi, interrompere l'esecuzione di tutti i servizi.  
+Si riporta come esempio la definizione del servizio \texttt{tcpu} (\autoref{lst:compose}). Si fa uso di un \emph{dockerfile} esterno per costruire e configurare l'ambiente del container. Viene montato un volume esterno, dove salvare dati di log. Il servizio attende l'avvio dei servizi \texttt{hm} e \texttt{em}.  
+\lstinputlisting[linerange={59-76},language=docker-compose-2,frame=none,caption={Definizione del container \texttt{tcpu} all'interno del file di configurazione di \emph{docker compose}.},label={lst:compose}]{../lst/compose.yaml}
 \section{Strumenti di analisi dei file di output}
 %intro della section
 Sono stati sviluppati strumenti di analisi dei PT file in modo da leggerne e osservarne graficamente il contenuto.

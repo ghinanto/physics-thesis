@@ -1,0 +1,16 @@
+"TCPU": {
+    "LOG_LEVEL": "DEBUG",
+    "LOG_TO_SYSLOG": "false",
+    "BASE_CTRL_PORT": "6200",
+    "BASE_DATA_PORT": "6300",
+    "PLUGINS_DIR": "\/tridas\/build-test\/DAQ\/TCPU\/trigger_plugins",
+    "PARALLEL_TTS": "10",
+    "HOSTS": [
+        {
+            "CTRL_HOST": "localhost",
+            "DATA_HOST": "localhost",
+            "N_INSTANCES": "1"
+        }
+    ],
+...
+}

@@ -1,0 +1,141 @@
+
+services:
+
+  fcm:
+    build:
+      context: .
+      dockerfile: Dockerfile-fcm
+    image: tridas/fcm
+    init: true
+    depends_on:
+      - syslog
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "udp://127.0.0.1:5514"
+        tag: "fcm"
+    volumes:
+      - /tmp/tridas:/tmp/tridas
+
+  vtp:
+    build:
+      context: .
+      dockerfile: Dockerfile-vtp
+    image: tridas/vtp
+    init: true
+    depends_on:
+      - syslog
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "udp://127.0.0.1:5514"
+        tag: "vtp"
+    volumes:
+      - /tmp/tridas:/tmp/tridas
+    links:
+      - hm
+    command: ["RunVTP", "-d", "/tmp/tridas/shared/vtp.json"]
+    expose:
+      - 15000
+
+  hm:
+    build:
+      context: .
+      dockerfile: Dockerfile-tridas
+    image: tridas/tridas
+    init: true
+    depends_on:
+      - syslog
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "udp://127.0.0.1:5514"
+        tag: "hm"
+    volumes:
+      - /tmp/tridas:/tmp/tridas
+    links:
+      - fcm
+
+  tcpu:
+    build:
+      context: .
+      dockerfile: Dockerfile-tridas
+    image: tridas/tridas
+    init: true
+    depends_on:
+      - syslog
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "udp://127.0.0.1:5514"
+        tag: "tcpu"
+    volumes:
+      - /tmp/tridas:/tmp/tridas
+    links:
+      - hm
+      - em
+
+  em:
+    build:
+      context: .
+      dockerfile: Dockerfile-tridas
+    image: tridas/tridas
+    init: true
+    depends_on:
+      - syslog
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "udp://127.0.0.1:5514"
+        tag: "em"
+    volumes:
+      - /tmp/tridas:/tmp/tridas
+
+  tsv:
+    build:
+      context: .
+      dockerfile: Dockerfile-tridas
+    image: tridas/tridas
+    init: true
+    depends_on:
+      - syslog
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "udp://127.0.0.1:5514"
+        tag: "tsv"
+    volumes:
+      - /tmp/tridas:/tmp/tridas
+    links:
+      - hm
+      - tcpu
+
+  tsc:
+    build:
+      context: .
+      dockerfile: Dockerfile-tsc
+    image: tridas/tsc
+    init: true
+    depends_on:
+      - syslog
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "udp://127.0.0.1:5514"
+        tag: "tsc"
+    volumes:
+      - /tmp/tridas:/tmp/tridas
+    links:
+      - hm
+      - tcpu
+      - tsv
+      - em
+      - fcm
+    command: ["RunTSC", "-x", "/tmp/tridas/tsc.sock"]
+
+  syslog:
+    image: voxxit/rsyslog
+    ports:
+      - "127.0.0.1:5514:514/udp"
+    volumes:
+      - /tmp/tridas/log:/var/log
