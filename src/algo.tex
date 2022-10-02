@@ -116,6 +116,24 @@ Si riporta come esempio la definizione del servizio \texttt{tcpu} (\autoref{lst:
 %intro della section
 Sono stati sviluppati strumenti di analisi dei PT file in modo da leggerne e osservarne graficamente il contenuto.
 \subsection{Estrazione in formato testuale dei dati dei PT file}
+Il PT file contiene i dati in formato binario. Per poter analizzare e rendere graficamente i dati, è stato implementato un algoritmo che estrae i dati da un PT file e li scrive su file in formato testuale.
+Il programma \texttt{pt2txt} prende argomenti da riga di comando il nome del PT file da leggere e il nome del file di testo da scrivere. 
+Quindi, utilizzando la classe \texttt{PtFileReader} di TriDAS, scorre le TS del file, gli eventi di ciascuna TS e le \emph{hit} di ciascun evento. Per ciascuna \emph{hit} l'algoritmo scrive una riga del file di testo contente nell'ordine e separandoli con uno spazio: le proprietà della \emph{hit}, le proprietà dell'evento a cui appartiene la hit, le proprietà della TS a cui appartiene l'evento.
+Nella prima riga vengono scritti i nomi identificativi dei vari attributi. In questo modo i valori di un certo attributo occupano tutti una certa colonna, identificata dal nome dell'attributo.
+Il programma è stato integrato nei file \emph{cmake} di compilazione di TriDAS.
 \subsection{Graficare dati numerici da file di testo}
+Un PT file di $\small\sim$\SI{500}{MB} contiene circa \SI{19e6}{} \emph{hit}. Perciò è utile rendere graficamente i valori delle varie proprietà delle \emph{hit} per osservarne l'andamento. Si è sviluppato un algoritmo che legge dati numerici disposti in colonna e li usa per riempire dei grafici. In particolare, si fa uso del \emph{framework} analisi dati e grafica ROOT. L'algoritmo può essere eseguito come macro dalla linea di comando di ROOT o essere compilato in un eseguibile. Per la compilazione e l'esecuzione è fornito un ambiente \emph{docker} tramite \emph{dockerfile} di configurazione.
+
+L'algoritmo prende come argomenti il nome del file contenente i dati, i nomi degli attributi di cui grafitare i dati o gli indici delle colonne contenenti i dati da graficare, il tipo di grafico da riempire (tra quelli supportati) e eventuali opzioni da passare alla funzione \texttt{Draw} di ROOT. I tipi di grafici supportati sono \texttt{TGraph} per disegnare grafici sul piano cartesiano, \texttt{TH1I} per istogrammi di numeri interi e \texttt{TH1F} per istogrammi di numeri decimali.
+Per esempio, per rappresentare graficamente la prima e la terza colonna di un file di testo come coordinate $x$ e $y$ di punti sul piano cartesiano
+\begin{lstlisting}[frame=none]
+$ ./pltxt -d data.txt -c 0 2 -p TGraph -o AL
+\end{lstlisting}
+o in alternativa da linea di comando di ROOT
+\begin{lstlisting}[frame=none]
+$ pltxt<int>("data.txt", {0, 2}, {"TGraph", "AL"})
+\end{lstlisting}
+La funzione \texttt{pltxt} riceve il tipo di dato da leggere come argomento \emph{template}. I dati supportati sono \texttt{int} e \texttt{double}. 
+L'algoritmo utilizza internamente la funzione \texttt{get\_column} per convertire i dati numerici in colonna in un vettore.
 \end{document}
 
