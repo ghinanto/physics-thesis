@@ -12,10 +12,10 @@
 I raggi cosmici sono una fonte naturale di particelle cariche ad alta energia che, interagendo con l'atmosfera, giungono alla superficie terrestre. Tutti gli esperimenti che utilizzano rilevatori di particelle cariche presentano un segnale di fondo generato dalla presenza di raggi cosmici. In alcuni casi questo può minacciare la riuscita dell'esperimento, per esempio nel caso si voglia rilevare eventi meno energetici e rari come i neutrini \cite{cosmicrays}.
 A seconda delle caratteristiche dell'esperimento e del fenomeno fisico di interesse, è possibile simulare questo segnale di fondo per poi andare a rimuoverlo. Altrimenti è possibile sviluppare algoritmi di identificazione degli eventi generati dai raggi cosmici.
 
-Si presenta l'algoritmo di identificazione di eventi generati da raggi cosmici sviluppato per il prototipo di rilevatore descritto nel capitolo precedente (matrice $3 \times 3$ di calorimetri e fotomoltiplicatori). L'acquisizione dati è gestita da TriDAS e l'algoritmo è inserito come \emph{trigger} L2.
+Si presenta l'algoritmo di identificazione di eventi generati da raggi cosmici sviluppato per il prototipo di rilevatore descritto nel capitolo precedente (matrice $3 \times 3$ di calorimetri e fotomoltiplicatori, \autoref{sct:jlab}). L'acquisizione dati è gestita da TriDAS e l'algoritmo è inserito come \emph{trigger} L2.
 %algoritmo
-Per prima cosa si mostra l'interfaccia definita da TriDAS per un trigger L2.
-Il trigger L2 ( o \emph{trigger plugin}), in questo caso \emph{TrigFromBeam}, è dichiarato come una funzione che prende come argomento un oggetto di tipo \emph{PluginArgs} 
+Per prima cosa si mostra l'interfaccia definita da TriDAS per un \emph{trigger} L2.
+Il \emph{trigger} L2 ( o \emph{trigger plugin}), in questo caso \emph{TrigFromBeam}, è dichiarato come una funzione che prende come argomento un oggetto di tipo \emph{PluginArgs} 
 \begin{lstlisting}[language=C++,frame=none]
 void TrigFromBeam(PluginArgs const& args);
 \end{lstlisting}
@@ -30,9 +30,9 @@ struct PluginArgs
 };
 \end{lstlisting}
 Quindi l'algoritmo dispone degli eventi appartenenti a una certa \emph{TimeSlice} (TS), della geometria dell'apparato e del file di configurazione fornito dall'utente.
-Per ciascun evento della TS, l'algoritmo riempie un vettore chiamato \texttt{seeds} con le \emph{hit}, i.e. picchi di segnale, selezionate dal \emph{trigger} L1, dette \emph{seed} del \emph{trigger}.
+L'energia media di un muone cosmico alla superficie terrestre ($\small\sim$\SI{4}{GeV}) è tale da superare la soglia del \emph{trigger} L1 (\SI{2}{GeV}). Quindi, le \emph{hit}, i.e. picchi di segnale, degli eventi generati da un muone cosmico vengono selezionati dal \emph{trigger} L1.
+Per ciascun evento della TS, l'algoritmo riempie un vettore chiamato \texttt{seeds} con i \emph{seed} del \emph{trigger} L1, ovvero le \emph{hit} che il \emph{trigger} ha selezionato.
 \lstinputlisting[linerange={181-181},language=C++,frame=none]{../lst/TrigFromBeam/TrigFromBeam.cpp}
-Infatti l'energia media di un muone cosmico alla superficie terrestre ($\small\sim$\SI{4}{GeV}) è tale da superare la soglia del trigger L1 (\SI{2}{GeV}).
 Le \emph{hit} sono rappresentate dal tipo \texttt{PMTHit}, che contiene l'indice identificativo del sensore che ha prodotto la \emph{hit}, il tempo di arrivo, la carica elettrica del picco di segnale, etc. 
 Quindi, per ciascun \emph{seed} \texttt{this\_seed} del vettore \texttt{seeds}, si verifica la presenza di altri \emph{seed} correlati spazio-temporalmente a \texttt{this\_seed}. In caso affermativo, i \emph{seed} corrispondenti sono inseriti in un vettore chiamato \texttt{cosmic\_trace}.
 \lstinputlisting[language=C++,frame=none,emph={[3]this_seed},emphstyle={[3]\color{blue}},caption={Algoritmo di selezione di \emph{hit} generate da raggi cosmici implementato dalla funzione \texttt{TrigFromBeam}.},label={lst:algo}]{../lst/algo_short.cpp}
@@ -72,7 +72,7 @@ Gli elementi sottostanti $e_{i,j}$ compresi tra le due diagonali sono definiti d
 \begin{equation}
 	I_{down} = \{ e_{i',j'}\ \mid\ i' + j' \geq a\ \land\ i' - j' \geq b\}
 \end{equation}
-Se un \emph{seed} è stato prodotto da un sensore la cui posizione appartiene all'insieme unione $I_{up}\ \cup\ I_{down}$, allora può essere correlato al seed \texttt{this\_seed}.
+Se un \emph{seed} è stato prodotto da un sensore la cui posizione appartiene all'insieme unione $I_{up}\ \cup\ I_{down}$, allora può essere correlato al seed \texttt{this\_seed}, prodotto dal sensore che occupa l'elemento $e_{i,j}$ della matrice.
 L'algoritmo verifica anche che una \emph{hit} prodotta da un sensore soprastante il sensore che ha prodotto \texttt{this\_seed}, sia precedente temporalmente a \texttt{this\_seed}. Analogamente, una \emph{hit} prodotta da un sensore sottostante il sensore che ha prodotto \emph{this\_seed}, deve essere anche successiva temporalmente a \texttt{this\_seed}.
 
 \lstinputlisting[linerange={75-85},language=C++,frame=none,caption={Algoritmo di correlazione spaziale implementato dalla funzione \texttt{spaceCorrelation}.}]{../lst/TrigFromBeam/TrigFromBeam.cpp}
@@ -93,36 +93,40 @@ Si vede come l'algoritmo sia strutturato in modo da sfruttare una logica general
 
 L'algoritmo fa uso del sistema di \emph{logging} \texttt{TRIDAS\_LOG} implementato in TriDAS per comunicare risultati e errori. 
 \lstinputlisting[linerange={255-257},language=C++,frame=none,caption={Esempio di uso del sistema di \emph{log}. Prima di terminare l'esecuzione, viene riportato il numero di \emph{seed} selezionati dal \emph{trigger} L2.}]{../lst/TrigFromBeam/TrigFromBeam.cpp}
+Il programma è stato integrato nel sistema di compilazione \emph{CMake} di TriDAS.
 \section{Ambiente di test}
 %intro della section
 TriDAS prevede un algoritmo di esecuzione \emph{offline} con lo scopo di sottoporre i dati contenuti in un PT file precedentemente acquisito a un \emph{trigger plugin} (L2). Questo algoritmo è stato perfezionato e reso funzionante. Inoltre è stato completata la configurazione di un ambiente \emph{docker compose} con cui eseguire localmente TriDAS in fase di test. 
-\subsection{Applicazione \emph{offline} del trigger a PT file}
+\subsection{Applicazione \emph{offline} del \emph{trigger} a PT file}
 Il programma \texttt{trig\_sim} esegue in locale una TCPU e un EM, sottoponendo ai \emph{trigger} i dati contenuti in un PT file e salvando i risultati in un nuovo PT file.
 Il programma prende quattro argomenti da riga di comando: la pozione dell'eseguibile della TCPU, il file di configurazione di TriDAS, il PT file da analizzare, il nome del nuovo PT file in cui salvare i dati. L'interfaccia fa uso della libreria \texttt{boost::program\_options}.
 
 Per prima cosa si avvia la TCPU come sottoprocesso. L'eseguibile della TCPU richiede due argomenti da riga di comando: identificativo della TCPU e file di configurazione di TriDAS.
 \lstinputlisting[linerange={112-112,114-114},language=C++,frame=none]{../lst/trig_sim_3x3telescope.cpp}
 Quindi, vengono create le socket necessarie a realizzare le connessioni tra i diversi moduli e connesse alle porte della rete locale indicate nel file di configurazione.
-\lstinputlisting[linerange={117-120},language=C++,frame=none]{../lst/trig_sim_3x3telescope.cpp}
+%\lstinputlisting[linerange={117-120},language=C++,frame=none]{../lst/trig_sim_3x3telescope.cpp}
 \lstinputlisting[language=json,frame=none,caption={Parte del file di configurazione in cui si specificano alcuni parametri richiesti dalla TCPU, come le porte della rete locale a cui connettersi.}]{../lst/conf_example.json}
 Quindi, in un nuovo \emph{thread}, viene avviato il \texttt{FileWriter}, componente dell'EM, il quale resta in attesa di ricevere eventi da scrivere nel PT file. 
 Il PT file viene letto utilizzando la classe \texttt{PTFileReader} di TriDAS, la quale permette di scorrere le le TS, gli eventi di ciascuna TS e le \emph{hit} di ciascun evento. Quindi, per ciascuna TS viene costruita una TTS e inviata alla TCPU tramite la socket \texttt{hm2tcpu}.
 La TCPU quindi analizza la TTS, costruisce gli eventi e li invia al \texttt{FileWriter} utilizzando la socket \texttt{tcpu2em}.
 \subsection{Ambiente \emph{docker} di esecuzione}
 \emph{Docker compose} è una tecnologia che permette di definire e eseguire applicazioni che richiedono la connessione di diversi \emph{container}. I \emph{container} dell'applicazione, detti \say{servizi}, sono definiti in un file di configurazione formato \texttt{YAML}. Ciascun servizio esegue un modulo di TriDAS e si connette agli altri tramite una rete locale creata da \emph{compose}. Quindi \emph{compose} prevede comandi per: avviare tutti i servizi, vedere l'output e il \emph{log} di ciascun servizio, aprire una \emph{shell} in qualsiasi \emph{container} per eseguire dei comandi, interrompere l'esecuzione di tutti i servizi.  
-Si riporta come esempio la definizione del servizio \texttt{tcpu} (\autoref{lst:compose}). Si fa uso di un \emph{dockerfile} esterno per costruire e configurare l'ambiente del container. Viene montato un volume esterno, dove salvare dati di log. Il servizio attende l'avvio dei servizi \texttt{hm} e \texttt{em}.  
+Si riporta come esempio la definizione del servizio \texttt{tcpu} (\autoref{lst:compose}). Si fa uso di un \emph{dockerfile} esterno per costruire e configurare l'ambiente del container. Viene montato un volume esterno, dove salvare dati di log. Il servizio attende l'avvio dei servizi \texttt{hm} e \texttt{em} in modo che, quando avviata, la TCPU disponga di un flusso di dati in entrata proveniente dall'HM e possa inviare dati all'EM. 
 \lstinputlisting[linerange={59-76},language=docker-compose-2,frame=none,caption={Definizione del container \texttt{tcpu} all'interno del file di configurazione di \emph{docker compose}.},label={lst:compose}]{../lst/compose.yaml}
 \section{Strumenti di analisi dei file di output}
 %intro della section
 Sono stati sviluppati strumenti di analisi dei PT file in modo da leggerne e osservarne graficamente il contenuto.
 \subsection{Estrazione in formato testuale dei dati dei PT file}
+\label{sct:pt2txt}
 Il PT file contiene i dati in formato binario. Per poter analizzare e rendere graficamente i dati, è stato implementato un algoritmo che estrae i dati da un PT file e li scrive su file in formato testuale.
-Il programma \texttt{pt2txt} prende argomenti da riga di comando il nome del PT file da leggere e il nome del file di testo da scrivere. 
+Il programma \texttt{pt2txt} prende come argomenti da riga di comando il nome del PT file da leggere e il nome del file di testo da scrivere. 
 Quindi, utilizzando la classe \texttt{PtFileReader} di TriDAS, scorre le TS del file, gli eventi di ciascuna TS e le \emph{hit} di ciascun evento. Per ciascuna \emph{hit} l'algoritmo scrive una riga del file di testo contente nell'ordine e separandoli con uno spazio: le proprietà della \emph{hit}, le proprietà dell'evento a cui appartiene la hit, le proprietà della TS a cui appartiene l'evento.
-Nella prima riga vengono scritti i nomi identificativi dei vari attributi. In questo modo i valori di un certo attributo occupano tutti una certa colonna, identificata dal nome dell'attributo.
-Il programma è stato integrato nei file \emph{cmake} di compilazione di TriDAS.
+Nella prima riga del file vengono scritti i nomi identificativi dei vari attributi. In questo modo i valori di un certo attributo occupano tutti una certa colonna, identificata dal nome dell'attributo.
+Il programma è stato integrato nel sistema di compilazione \emph{CMake} di TriDAS.
+\lstinputlisting[frame=none,caption={Parte di un file di testo prodotto da un PT file con \texttt{pt2txt}. In ordine sono elencati la carica della \emph{hit}, l'indice identificativo del sensore (PMT) che l'ha prodotta, il tempo di arrivo, l'indice identificativo della ``torre'' (gruppo di rilevatori) in cui risiede il sensore, l'indice identificativo dell'evento di cui la \emph{hit} fa parte. Gli altri attributi sono omessi dal listato per brevità.}]{../lst/short_head_3x3.txt}
+%\lstinputlisting[language={},frame=none,caption={Parte di un file di testo prodotto da un PT file con \texttt{pt2txt}. In ordine sono elencati la carica della \emph{hit}, l'indice identificativo del sensore (PMT) che l'ha prodotta, il tempo di arrivo, l'indice identificativo della \say{torre} in cui risiede il sensore, l'indice identificativo dell'evento di cui la \emph{hit} fa parte. Gli altri attributi sono omessi per brevità.}]{../lst/short_head_3x3.txt}
 \subsection{Graficare dati numerici da file di testo}
-Un PT file di $\small\sim$\SI{500}{MB} contiene circa \SI{19e6}{} \emph{hit}. Perciò è utile rendere graficamente i valori delle varie proprietà delle \emph{hit} per osservarne l'andamento. Si è sviluppato un algoritmo che legge dati numerici disposti in colonna e li usa per riempire dei grafici. In particolare, si fa uso del \emph{framework} analisi dati e grafica ROOT. L'algoritmo può essere eseguito come macro dalla linea di comando di ROOT o essere compilato in un eseguibile. Per la compilazione e l'esecuzione è fornito un ambiente \emph{docker} tramite \emph{dockerfile} di configurazione.
+Un PT file di $\small\sim$\SI{500}{MB} contiene circa \SI{19e6}{} \emph{hit}. Perciò è utile rendere graficamente i valori delle varie proprietà delle \emph{hit} per osservarne l'andamento. Si è sviluppato un algoritmo che legge dati numerici disposti in colonna e li usa per riempire dei grafici. In particolare, si fa uso del \emph{framework} di analisi dati e grafica ROOT. L'algoritmo può essere eseguito come macro dalla linea di comando di ROOT o essere compilato in un eseguibile. Per la compilazione e l'esecuzione è fornito un ambiente \emph{docker} tramite \emph{dockerfile} di configurazione.
 
 L'algoritmo prende come argomenti il nome del file contenente i dati, i nomi degli attributi di cui grafitare i dati o gli indici delle colonne contenenti i dati da graficare, il tipo di grafico da riempire (tra quelli supportati) e eventuali opzioni da passare alla funzione \texttt{Draw} di ROOT. I tipi di grafici supportati sono \texttt{TGraph} per disegnare grafici sul piano cartesiano, \texttt{TH1I} per istogrammi di numeri interi e \texttt{TH1F} per istogrammi di numeri decimali.
 Per esempio, per rappresentare graficamente la prima e la terza colonna di un file di testo come coordinate $x$ e $y$ di punti sul piano cartesiano
@@ -134,6 +138,14 @@ o in alternativa da linea di comando di ROOT
 $ pltxt<int>("data.txt", {0, 2}, {"TGraph", "AL"})
 \end{lstlisting}
 La funzione \texttt{pltxt} riceve il tipo di dato da leggere come argomento \emph{template}. I dati supportati sono \texttt{int} e \texttt{double}. 
-L'algoritmo utilizza internamente la funzione \texttt{get\_column} per convertire i dati numerici in colonna in un vettore.
+
+\begin{figure}[tb]
+	\centering
+	\includegraphics[width=0.8\textwidth]{c1-1.png}
+    \caption{Istogramma dei valori di carica delle \emph{hit} generato da un PT file utilizzando \texttt{pt2txt} (vedi \autoref{sct:pt2txt}) e \texttt{plotxt}. Si nota il picco di carica in corrispondenza dell'energia degli elettroni del fascio.}
+	\label{fig:histo}
+\end{figure}
+%L'algoritmo utilizza internamente la funzione \texttt{get\_column} per convertire i dati numerici in colonna in un vettore.
+
 \end{document}
 

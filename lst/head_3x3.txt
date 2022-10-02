@@ -1,0 +1,3 @@
+Charge EFCMID FrameCounter PMTID T1ns TowerID nFrames EventID EventL EventTag StartTime[1/1000000000]sec TSCompleted nHit nseeds[0] plugin_nseeds[0] plugin_trigtype[0] NEvents TS_ID TS_size datacard_size effective_file_size file_number number_of_events number_of_timeslices run_number run_start_time 
+105 3 31270616 4 568 22 1 0 220 12081972 651690548 1 9 1 0 -671095448 59 40987 12540 1954624 501962324 1 2320909 38806 134 1 
+422 3 31270616 5 568 22 1 0 220 12081972 651690548 1 9 1 0 -671095448 59 40987 12540 1954624 501962324 1 2320909 38806 134 1 
