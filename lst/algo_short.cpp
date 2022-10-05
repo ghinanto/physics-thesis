@@ -10,7 +10,7 @@ for (auto const& this_seed : seeds) {
            });
 
     if (!cosmic_trace.empty()) { // seed is from cosmic ray
-        // get informations about comsic ray
+        // get information about cosmic ray
     } else { // seed is from beam
         // select seed to be saved in the PT file
     }

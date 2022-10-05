@@ -12,7 +12,7 @@
 I raggi cosmici sono una fonte naturale di particelle cariche ad alta energia che, interagendo con l'atmosfera, giungono alla superficie terrestre. Tutti gli esperimenti che utilizzano rilevatori di particelle cariche presentano un segnale di fondo generato dalla presenza di raggi cosmici. In alcuni casi questo può minacciare la riuscita dell'esperimento, per esempio nel caso si voglia rilevare eventi meno energetici e rari come i neutrini \cite{cosmicrays}.
 A seconda delle caratteristiche dell'esperimento e del fenomeno fisico di interesse, è possibile simulare questo segnale di fondo per poi andare a rimuoverlo. Altrimenti è possibile sviluppare algoritmi di identificazione degli eventi generati dai raggi cosmici.
 
-Si presenta l'algoritmo di identificazione di eventi generati da raggi cosmici sviluppato per il prototipo di rilevatore descritto nel capitolo precedente (matrice $3 \times 3$ di calorimetri e fotomoltiplicatori, \autoref{sct:jlab}). L'acquisizione dati è gestita da TriDAS e l'algoritmo è inserito come \emph{trigger} L2.
+Si presenta l'algoritmo di identificazione di eventi generati da raggi cosmici sviluppato per il prototipo di rivelatore descritto nel capitolo precedente (matrice $3 \times 3$ di calorimetri e fotomoltiplicatori, \autoref{sct:jlab}). L'acquisizione dati è gestita da TriDAS e l'algoritmo è inserito come \emph{trigger} L2.
 %algoritmo
 Per prima cosa si mostra l'interfaccia definita da TriDAS per un \emph{trigger} L2.
 Il \emph{trigger} L2 ( o \emph{trigger plugin}), in questo caso \emph{TrigFromBeam}, è dichiarato come una funzione che prende come argomento un oggetto di tipo \emph{PluginArgs} 
@@ -37,10 +37,10 @@ Le \emph{hit} sono rappresentate dal tipo \texttt{PMTHit}, che contiene l'indice
 Quindi, per ciascun \emph{seed} \texttt{this\_seed} del vettore \texttt{seeds}, si verifica la presenza di altri \emph{seed} correlati spazio-temporalmente a \texttt{this\_seed}. In caso affermativo, i \emph{seed} corrispondenti sono inseriti in un vettore chiamato \texttt{cosmic\_trace}.
 \lstinputlisting[language=C++,frame=none,emph={[3]this_seed},emphstyle={[3]\color{blue}},caption={Algoritmo di selezione di \emph{hit} generate da raggi cosmici implementato dalla funzione \texttt{TrigFromBeam}.},label={lst:algo}]{../lst/algo_short.cpp}
 La correlazione spaziale e temporale dipende dalla geometria dell'apparato e dal fenomeno fisico in questione. Nel caso dei raggi cosmici, possiamo considerare in prima approssimazione muoni che volano in direzione perpendicolare alla superficie terrestre a velocità prossime a $c$. 
-L'apparato del rilevatore è il prototipo descritto nel capitolo precedente (\autoref{sct:jlab}). Consideriamo quindi una matrice $3 \times 3$ di rilevatori, ciascuno di sezione quadrata di lato $d$.
-Quindi, nel caso di passaggio di un muone cosmico all'interno del rilevatore, ci aspettiamo di trovare \emph{hit} successive in una colonna di rilevatori, a distanza temporale di $\small\sim\frac{d}{c}$.
+L'apparato del rivelatore è il prototipo descritto nel capitolo precedente (\autoref{sct:jlab}). Consideriamo quindi una matrice $3 \times 3$ di rilevatori, ciascuno di sezione quadrata di lato $d$.
+Quindi, nel caso di passaggio di un muone cosmico all'interno del rivelatore, ci aspettiamo di trovare \emph{hit} successive in una colonna di rilevatori, a distanza temporale di $\small\sim\frac{d}{c}$.
 
-La correlazione spaziale e temporale è definita dalle funzioni \texttt{timeCorrelation} e \texttt{spaceCorrelation}.
+Le correlazioni spaziale e temporale sono definite dalle funzioni \texttt{timeCorrelation} e \texttt{spaceCorrelation}.
 La funzione \texttt{timeCorrelation} prende come argomento due \emph{hit} e restituisce \texttt{vero} o \texttt{falso} a seconda che siano soddisfatti i criteri di correlazione temporale.
 Per tenere conto di possibili variazioni statistiche del valore della velocità di volo e di traiettorie non propriamente verticali, la funzione verifica che la distanza temporale tra le due \emph{hit} cada all'interno di un intervallo.
 La distanza temporale minima \texttt{shortest\_correlation\_time\_frame} tra due \emph{hit} è $\frac{d}{c}$, ovvero quella generata da un muone che cade perpendicolare alla superficie terrestre a velocità $c$.
@@ -99,7 +99,7 @@ Il programma è stato integrato nel sistema di compilazione \emph{CMake} di TriD
 TriDAS prevede un algoritmo di esecuzione \emph{offline} con lo scopo di sottoporre i dati contenuti in un PT file precedentemente acquisito a un \emph{trigger plugin} (L2). Questo algoritmo è stato perfezionato e reso funzionante. Inoltre è stato completata la configurazione di un ambiente \emph{docker compose} con cui eseguire localmente TriDAS in fase di test. 
 \subsection{Applicazione \emph{offline} del \emph{trigger} a PT file}
 Il programma \texttt{trig\_sim} esegue in locale una TCPU e un EM, sottoponendo ai \emph{trigger} i dati contenuti in un PT file e salvando i risultati in un nuovo PT file.
-Il programma prende quattro argomenti da riga di comando: la pozione dell'eseguibile della TCPU, il file di configurazione di TriDAS, il PT file da analizzare, il nome del nuovo PT file in cui salvare i dati. L'interfaccia fa uso della libreria \texttt{boost::program\_options}.
+Il programma prende quattro argomenti da riga di comando: la porzione dell'eseguibile della TCPU, il file di configurazione di TriDAS, il PT file da analizzare, il nome del nuovo PT file in cui salvare i dati. L'interfaccia fa uso della libreria \texttt{boost::program\_options}.
 
 Per prima cosa si avvia la TCPU come sottoprocesso. L'eseguibile della TCPU richiede due argomenti da riga di comando: identificativo della TCPU e file di configurazione di TriDAS.
 \lstinputlisting[linerange={112-112,114-114},language=C++,frame=none]{../lst/trig_sim_3x3telescope.cpp}
@@ -128,7 +128,7 @@ Il programma è stato integrato nel sistema di compilazione \emph{CMake} di TriD
 \subsection{Graficare dati numerici da file di testo}
 Un PT file di $\small\sim$\SI{500}{MB} contiene circa \SI{19e6}{} \emph{hit}. Perciò è utile rendere graficamente i valori delle varie proprietà delle \emph{hit} per osservarne l'andamento. Si è sviluppato un algoritmo che legge dati numerici disposti in colonna e li usa per riempire dei grafici. In particolare, si fa uso del \emph{framework} di analisi dati e grafica ROOT. L'algoritmo può essere eseguito come macro dalla linea di comando di ROOT o essere compilato in un eseguibile. Per la compilazione e l'esecuzione è fornito un ambiente \emph{docker} tramite \emph{dockerfile} di configurazione.
 
-L'algoritmo prende come argomenti il nome del file contenente i dati, i nomi degli attributi di cui grafitare i dati o gli indici delle colonne contenenti i dati da graficare, il tipo di grafico da riempire (tra quelli supportati) e eventuali opzioni da passare alla funzione \texttt{Draw} di ROOT. I tipi di grafici supportati sono \texttt{TGraph} per disegnare grafici sul piano cartesiano, \texttt{TH1I} per istogrammi di numeri interi e \texttt{TH1F} per istogrammi di numeri decimali.
+L'algoritmo prende come argomenti il nome del file contenente i dati, i nomi degli attributi di cui graficare i dati o gli indici delle colonne contenenti i dati da graficare, il tipo di grafico da riempire (tra quelli supportati) e eventuali opzioni da passare alla funzione \texttt{Draw} di ROOT. I tipi di grafici supportati sono \texttt{TGraph} per disegnare grafici sul piano cartesiano, \texttt{TH1I} per istogrammi di numeri interi e \texttt{TH1F} per istogrammi di numeri decimali.
 Per esempio, per rappresentare graficamente la prima e la terza colonna di un file di testo come coordinate $x$ e $y$ di punti sul piano cartesiano
 \begin{lstlisting}[frame=none]
 $ ./pltxt -d data.txt -c 0 2 -p TGraph -o AL
