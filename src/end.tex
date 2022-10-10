@@ -9,5 +9,12 @@
 \end{comment}
 
 \begin{document}
-Discussione e conclusioni
+L'algoritmo di identificazione di eventi generati da raggi cosmici implementato nel trigger L2 \emph{TrigFromBeam} è integrato con successo nel \emph{framework} di TriDAS. 
+
+Allo stato attuale risultano delle incompatibilità nei sistemi di indici utilizzati dai diversi componenti software. 
+Infatti, i PT file disponibili al momento per l'analisi sono quelli acquisiti ai Jefferson Lab utilizzando il rivelatore di cui nel capitolo 2 (matrice $3 \times 3$ di calorimetri). Il formato di dati utilizzato da TriDAS per l'acquisizione prevede una geometria di $23$ \say{torri}, ciascuna composta da $5$ \say{piani} di $16$ sensori ciascuno, per un totale di $1840$ sensori. Al momento dell'acquisizione quindi sono stati assegnati ai soli $9$ sensori dell'esperimento degli indici nell'intervallo $1 - 1840$. Inoltre gli indici non sono associati ai sensori secondo la disposizione dell'apparato sperimentale, per cui ad esempio i primi tre indici non corrispondono alla prima riga della matrice del rivelatore. 
+È necessario quindi realizzare ulteriori analisi per rendere noto all'algoritmo l'associazione tra gli indici utilizzati da TriDAS e la posizione dei sensori all'interno della matrice del rivelatore. 
+
+La continuazione di questo lavoro prevede la verifica dell'efficienza dell'algoritmo sfruttando il software \texttt{trig\_sim} descritto nel capitolo 3, utilizzando PT file precedentemente acquisiti e confrontandone il contenuto con quello dei nuovi PT file prodotti da \texttt{trig\_sim}.
+A questo scopo possono essere utilizzati i programmi \texttt{pt2txt} e \texttt{plotxt}, anch'essi descritti nel capitolo 3.
 \end{document}

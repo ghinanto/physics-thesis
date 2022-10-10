@@ -12,7 +12,7 @@ L'evoluzione delle capacità di calcolo dei computer permette oggi di sostituire
 
 Un sistema di questo tipo è stato sviluppato nell'ambito del progetto \mbox{NEMO} (NEutrino Mediterranean Observatory) \cite{CHIARUSI2013129}. L'esperimento prevede rivelatori a scintillazione ancorati al fondale marino, tramite i quali rivelare la radiazione cherenkov emessa dalle particelle cariche generate dalla collisione tra neutrini cosmici e il fondale marino o le molecole d'acqua. La locazione sottomarina dell'esperimento ha richiesto la semplificazione dell'hardware dei rilevatori. Quindi tutti i dati sono inviati a terra dove TriDAS (Triggerless Data Acquisition System) realizza la selezione e l'archiviazione dei dati.
 Lo scopo del progetto NEMO è stato anche verificare e realizzare le condizioni per la realizzazione del progetto europeo KM3NeT \cite{km3}, i cui rilevatori ricoprono il volume di un kilometro cubo al largo delle coste di Francia, Italia e Grecia. 
-Quindi, TriDAS è stato scritto in modo da essere scalabile e adattabile a diverse configurazioni di rilevatori, caratteristica che lo ha reso capace di gestire esperimenti in ambiti diversi da quello delle astroparticelle, come gli esperimenti di collisione di fascio ai Jefferson Lab (Newport, Virginia) \cite{3x3telescope}. 
+Quindi, TriDAS è stato scritto in modo da essere scalabile e adattabile a diverse configurazioni di rilevatori, caratteristica che lo ha reso capace di gestire esperimenti in ambiti diversi da quello delle astroparticelle, come gli esperimenti di collisione di fascio ai Jefferson Lab (Newport News, Virginia, US) \cite{3x3telescope}. 
 
 \section{TriDAS-core}
 
@@ -56,7 +56,7 @@ L'apparato sperimentale è suddiviso in un certo numero di settori, ciascuno dei
 \end{figure}
 
 
-TriDAS (Triggerless Data Acquisition System) è un sistema di acquisizione dati \emph{triggerless} sviluppato originariamente per il prototipo di rilevatore per neutrini \mbox{NEMO}.
+TriDAS (Triggerless Data Acquisition System) \autocite{repo_tridas} è un sistema di acquisizione dati \emph{triggerless} sviluppato originariamente per il prototipo di rilevatore per neutrini \mbox{NEMO}.
 Il progetto NEMO ha avuto un'evoluzione graduale secondo diverse fasi di test, richiedendo al sistema di acquisizione di essere scalabile con i cambiamenti della struttura del rilevatore, del flusso di dati, etc.
 Quindi, TriDAS implementa un design modulare, dove ciascun componente ricopre un ruolo specifico nella catena di elaborazione e acquisizione dati (\autoref{fig:tridas}).
 I componenti sono scritti in \texttt{C++11} e comunicano tramite connessioni TCP e il sistema di messaggistica fornito dalla libreria \emph{ZeroMQ} e \emph{Boost Asio}.
@@ -93,7 +93,7 @@ Il \emph{TriDAS System Controller} (TSC) è l'interfaccia tramite la quale contr
 
 \section{Test presso i Jefferson Lab}
 \label{sct:jlab}
-L'esperimento CLAS12 (CEBAF Large Acceptance Spectrometer for operations at \SI{12}{\GeV} beam energy) presso i Jefferson Lab (Newport, Virginia) è usato per studiare reazioni adroniche e nucleari indotte dalla collisione di elettroni \cite{3x3telescope}. Contatori Cherenkov, scintillatori e calorimetri elettromagnetici permettono di identificare gli elettroni diffusi e gli adroni prodotti nelle collisioni. Quindi, un veloce meccanismo di \emph{triggering} e un'alta frequenza di acquisizione dati (frequenza di eventi prodotti pari a \SI{30}{\kilo\hertz}) permettono di operare a una luminosità di \SI{e35}{\cm^{-2}\s^{-1}}.
+L'esperimento CLAS12 (CEBAF Large Acceptance Spectrometer for operations at \SI{12}{\GeV} beam energy) presso i Jefferson Lab (Newport News, Virginia) è usato per studiare reazioni adroniche e nucleari indotte dalla collisione di elettroni \cite{3x3telescope}. Contatori Cherenkov, scintillatori e calorimetri elettromagnetici permettono di identificare gli elettroni diffusi e gli adroni prodotti nelle collisioni. Quindi, un veloce meccanismo di \emph{triggering} e un'alta frequenza di acquisizione dati (frequenza di eventi prodotti pari a \SI{30}{\kilo\hertz}) permettono di operare a una luminosità di \SI{e35}{\cm^{-2}\s^{-1}}.
 L'apparato dell'esperimento sta subendo un aggiornamento che porterà la luminosità ad aumentare di un fattore due. Si prevede di poter aumentare l'efficienza dell'attuale sistema di trigger basato su elettronica fino a raggiungere una frequenza di eventi prodotti di \SI{100}{\kilo\hertz}. Per raggiungere prestazioni più elevate, è in considerazione l'utilizzo di un sistema \emph{triggerless}. Verrebbero così mitigate alcune limitazioni, come l'identificazione di particelle neutre (fotoni prodotti dal decadimento di pioni neutri, controllando il valore della massa invariante) e si avrebbe un miglioramento della precisione della selezione, inficiata dal rumore prodotto dalle cascate adroniche. Si avrebbe anche una più accurata selezione dei canali di reazione, potendo disporre delle informazioni di tutte le parti del rilevatore (rilevatori Cherenkov e calorimetri). Il flusso di dati prodotto dall'apparato di CLAS12 è pari a \SI{50}{GBps}, da ridurre almeno di un fattore 10 perché sia possibile salvarne il contenuto in memoria.
 
 L'approccio \emph{triggerless} all'acquisizione dati è stato selezionato anche per il futuro esperimento EIC (Electron-Ion Collider) al Brookhaven National Laboratory (New York). Trattandosi di una tipologia inedita di esperimento di collisione di fascio, nuovi tipi di sensori verranno implementati aprendo possibilità di integrazione più stretta con il sistema di acquisizione dati. In particolare, si avranno vantaggi quali una calibrazione \emph{online} dei sensori per compensare le perdite di segnale dovute alle cascate elettromagnetiche, implementazione di algoritmi di intelligenza artificiale per un migliore riconoscimento dei pattern e delle tracce e più accurata distinzione tra cascate acroniche e elettromagnetiche. In più, possono essere implementati livelli di \emph{trigger} superiori per cercare particolari eventi di interesse. 
@@ -102,7 +102,7 @@ Il prototipo è formato da una matrice $3 \times 3$ di cristalli $PbWO_4$ ed è 
 Ciascun cristallo ($\SI{2.05}{\cm} \times \SI{2.05}{\cm} \times \SI{20}{\cm}$) è collegato a un fotomoltiplicatore di \SI{19}{\mm} di diametro. 
 Il prototipo è stato posizionato in modo che il centro del fascio elettronico illumini il cristallo centrale della matrice, con inclinazione perpendicolare alle facce dei cristalli.   
 Il test è stato svolto durante la presa dati dell'esperimento \emph{GlueX} con fascio di fotoni da \SI{350}{\nano\ampere} e un fascio secondario di elettroni da \SI{4.7}{\GeV}.
-Il segnale di ciascun PMT è stato digitalizzato e inviato a TriDAS, settando una soglia di $\small \sim$\SI{2}{\GeV} per gli eventi L1.
+Il segnale di ciascun PMT è stato digitalizzato e inviato a TriDAS, settando una soglia di $\small \sim$\SI{2}{\GeV} per gli eventi L1 (\autoref{fig:3x3graph}).
 I risultati ottenuti con con TriDAS sono compatibili con quelli ottenuti utilizzando il sistema \emph{triggered}, mostrando l'affidabilità del sistema di acquisizione \emph{triggerless} \cite{3x3telescope}.
 
 \begin{figure}[ptb]
@@ -123,15 +123,14 @@ Schema dell'apparato sperimentale realizzato nella \emph{Hall-D} dei Jefferson L
     \label{fig:3x3_scheme}
 \end{figure}
 
-
-\begin{comment}
-Sono state svolte diverse fasi di test per verificare la capacità di TriDAS di gestire flussi di dati degli esperimenti ai Jefferson Lab e per confrontare l'efficienza dell'approccio \emph{triggerless} con quello \emph{triggered} \cite{3x3telescope}. In particolare, si illustra l'esperimento per il quale è stato sviluppato l'algoritmo di cui nel prossimo capitolo.
-Un prototipo formato da una matrice $3 \times 3$ di cristalli $PbWO_4$ è stato installato nella \emph{Hall-D} dei Jefferson Lab, all'uscita del fascio secondario di elettroni prodotto dal \emph{Pair Spectrometer} (\autoref{fig:3x3} e \autoref{fig:3x3_scheme}). Fasci secondari di elettroni e positroni sono prodotti dall'interazione del fascio primario di fotoni con un convertitore in berillio di spessore \SI{750}{\micro\m} e separati da un campo magnetico di \SI{1.5}{\tesla}. 
-Ciascun cristallo ($\SI{2.05}{\cm} \times \SI{2.05}{\cm} \times \SI{20}{\cm}$) è stato collegato a un fotomoltiplicatore di \SI{19}{\mm} di diametro. 
-Il prototipo è stato posizionato in modo che il centro del fascio elettronico illumini il cristallo centrale della matrice, con inclinazione perpendicolare alle facce dei cristalli.   
-Il test è stato svolto durante la presa dati dell'esperimento \emph{GlueX} con fascio di fotoni da \SI{350}{\nano\ampere} e un fascio secondario di elettroni da \SI{4.7}{\GeV}.
-Quindi sono stati utilizzati due diversi sistemi di acquisizione: \emph{triggered} e \emph{triggerless}. Per quest'ultimo, il segnale di ciascun PMT è stato digitalizzato e inviato a TriDAS, settando una soglia di $\small \sim$\SI{2}{\GeV} per gli eventi L1.
-\end{comment}
+\begin{figure}[tb]
+    \centering
+    \includegraphics[width=0.8\textwidth]{3x3graph_trasp.png}
+    \caption{
+    Risposta in energia dei nove sensori del prototipo acquisita usando TriDAS. Il fascio era centrato nel sensore centrale della matrice.  
+	\cite{3x3telescope}}
+    \label{fig:3x3graph}
+\end{figure}
 
 
 \end{document}
