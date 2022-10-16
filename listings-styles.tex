@@ -1,0 +1,59 @@
+%Custom 
+\definecolor{plainText}{RGB}{74,131,31}
+\definecolor{comments}{RGB}{74,131,31}
+\definecolor{strings}{RGB}{180,54,34}
+\definecolor{numbers}{RGB}{44,45,211}
+\definecolor{keywords}{RGB}{160,49,158}
+\definecolor{preprocessorStatements}{RGB}{109,75,48}
+\definecolor{classNames}{RGB}{101,63,165}
+\definecolor{background}{RGB}{245,248,250}
+
+\lstdefinestyle{c++}{
+  frame=single,
+  %frameround=tttt,
+  backgroundcolor=\color{background},
+  language=C++,
+  % You need to declare < and > as "letters" in order to highlight
+  % words that contain those characters:
+  alsoletter=<>,
+  % You can use multiple classes of words to emphasize,
+  % each with its own style, as follows:
+  %emph      = {[1]cout, for, int, std},
+  %emphstyle = {\bfseries},
+  %emph      = {[2]double, std},
+  %emphstyle = {[2]\color{blue}\bfseries},
+  % The style of compiler directives can be customise via...
+  directivestyle=\color{magenta}\itshape, % (for instance)
+  aboveskip=4mm,
+  belowskip=4mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\ttfamily\color{black},
+  keywordstyle=\bfseries\color{keywords},
+  commentstyle=\color{comments},
+  stringstyle=\color{strings},
+  breaklines=true,
+  breakatwhitespace=true, % (a comma was missing there)
+  tabsize=4,
+}
+
+\lstdefinelanguage{json}{
+    string=[s]{"}{"},
+    stringstyle=\color{magenta}\itshape,
+    comment=[l]{:},
+    commentstyle=\color{black},
+}
+
+\lstdefinelanguage{docker-compose-2}{
+    %string=[s]{\ }{:},
+    %stringstyle=\color{magenta}\itshape,
+    basicstyle=\color{magenta}\ttfamily,
+    comment=[l]{:},
+    morecomment=[l]{\-\ },
+    commentstyle=\color{black},
+}
+
+\renewcommand{\lstlistingname}{Listato}
+\lstset{style=c++}
