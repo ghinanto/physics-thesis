@@ -15,18 +15,34 @@
     
 \begin{columns}[onlytextwidth,T]
   \begin{column}{.45\linewidth}
-    testo
+      Intensità muoni cosmici di \mbox{energia $\small>$\SI{1}{\GeV}} al livello del mare:
+      $$
+          I \sim 70\ m^{-2} s^{-1} sr^{-1}
+      $$
+      Contenuto di energia dei raggi cosmici:
+      %\[
+      $$
+      1 - \SI{10e10}{\GeV}
+      $$
+      %\]
   \end{column}
-  \begin{column}{.45\linewidth}
-    \includegraphics[scale=0.23]{cosmic.jpg}
-  \end{column}
+  %\begin{column}{.45\linewidth}
+  %\end{column}
 \end{columns}
+    % create TikZ picture environment
+    \begin{tikzpicture}[remember picture, overlay]
+    \node[left=1.2cm] at (current page.east) 
+    {
+        \includegraphics[width=0.5\textwidth]{cosmo-cascade.png}
+    };
+    \end{tikzpicture}
 
   \end{frame}
-  \begin{frame}{Acquisizione dati \emph{triggerless}}
-    Hello, world!
-  \end{frame}
   \begin{frame}{TriDAS}
+      \begin{itemize}
+         \item bau
+         \item ciao
+      \end{itemize}
     Hello, world!
   \end{frame}
   \begin{frame}{TriDAS @ JLab}
