@@ -1,0 +1,101 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme[progressbar=none]{metropolis}           % Use metropolis theme
+%\input{metropolis-settings.tex}
+\input{packages.tex}
+\title{Algoritmo di tagging di raggi cosmici\\in un sistema di acquisizione triggerless\\\mbox{per un esperimento di fisica di particelle su fascio}}
+\date{Anno Accademico 2022/2023}
+\author{Antonio Ghinassi}
+\institute{Alma Mater Studiorum $\cdot$ Università di Bologna}
+
+\begin{document}
+  \maketitle
+  \setbeamertemplate{frame footer}{\insertinstitute}%Alma Mater Studiorum $\cdot$ Università di Bologna}
+  %\section{First Section}
+  %SLIDE 1
+  \begin{frame}{Raggi cosmici}
+    
+\begin{columns}[onlytextwidth,T]
+  \begin{column}{.45\linewidth}
+      \begin{itemize}
+          \item Intensità muoni cosmici di \mbox{energia $\small>$\SI{1}{\GeV}} al livello del mare:
+      $$
+          I \sim 70\ m^{-2} s^{-1} sr^{-1}
+      $$
+          \item Contenuto di energia dei raggi cosmici:
+      %\[
+      $$
+      1 - \SI{e10}{\GeV}
+      $$
+      %\]
+      \end{itemize}
+  \end{column}
+  %\begin{column}{.45\linewidth}
+  %\end{column}
+\end{columns}
+    % create TikZ picture environment
+    \begin{tikzpicture}[remember picture, overlay]
+    \node[left=1.2cm] at (current page.east) 
+    {
+        \includegraphics[width=0.5\textwidth]{cosmo-cascade.png}
+    };
+    \end{tikzpicture}
+
+  \end{frame}
+  %SLIDE 2
+  \begin{frame}{TriDAS}
+      \begin{columns}[onlytextwidth,T]
+      \begin{column}{.45\linewidth}
+      \begin{itemize}
+         \item acquisizione triggerless
+         \item design modulare e scalabile
+      \end{itemize}
+      \end{column}
+      \begin{column}{.45\linewidth}
+      \end{column}
+    \end{columns}
+    \begin{tikzpicture}[remember picture, overlay]
+    \node[left=0.8cm] at (current page.east) 
+    {
+        \includegraphics[width=0.45\textwidth]{tridas_scheme_vertical_stripped.png}
+    };
+    \end{tikzpicture}
+  \end{frame}
+  %
+  \begin{frame}{TriDAS}
+    \begin{tikzpicture}[remember picture, overlay]
+    \node[right=0.8cm] at (current page.west) 
+    {
+        \includegraphics[width=0.55\textwidth]{hm_emph.png}
+    };
+    \end{tikzpicture}
+    \begin{tikzpicture}[remember picture, overlay]
+    \node[left=0.8cm] at (current page.east) 
+    {
+        \includegraphics[width=0.45\textwidth]{tridas_scheme_vertical_stripped_emph.png}
+    };
+    \end{tikzpicture}
+  \end{frame}
+  %
+  \begin{frame}{Algoritmo \texttt{I}}
+    Hello, world!
+  \end{frame}
+  %
+  \begin{frame}{Algoritmo \texttt{I}}
+    Hello, world!
+  \end{frame}
+  \begin{frame}{Algoritmo \texttt{II}}
+    Hello, world!
+  \end{frame}
+  \begin{frame}{Algoritmo \texttt{III}}
+    Hello, world!
+  \end{frame}
+  \begin{frame}{Strumenti di analisi e test}
+    Hello, world!
+  \end{frame}
+  \begin{frame}{Conclusioni}
+    Hello, world!
+  \end{frame}
+  \begin{frame}[standout]
+      Grazie per l'attenzione.
+  \end{frame}
+\end{document}
